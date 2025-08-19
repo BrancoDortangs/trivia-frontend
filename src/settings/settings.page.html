@@ -1,0 +1,20 @@
+<div class="flex justify-between items-center my-4">
+  <label for="theme">Theme</label>
+  <p-toggle-button
+    [inputId]="'theme'"
+    [ngModel]="themeService.isDarkMode()"
+    (onChange)="themeService.toggleDarkMode()"
+    [onLabel]="'Dark'"
+    [offLabel]="'Light'"
+  />
+</div>
+
+<p-divider />
+
+<p-floatlabel [variant]="'on'">
+  <p-input-number
+    [(ngModel)]="settingsService.amountOfQuestions"
+    [inputId]="'amount_of_questions'"
+  />
+  <label for="amount_of_questions">Amount of questions</label>
+</p-floatlabel>
