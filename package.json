@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --code-coverage",
     "format-entire-project": "prettier --write \"**/*.{js,ts,jsx,tsx,cjs,cts,mjs,mts,vue,astro,html,css,scss,json,md}\""
   },
   "prettier": {

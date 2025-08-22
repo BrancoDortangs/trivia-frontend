@@ -1,5 +1,5 @@
-<form #form="ngForm" (ngSubmit)="onSubmit()">
-  @for (question of questions(); track question.id) {
+<form #form="ngForm" (ngSubmit)="triviaForm.checkAnswers()">
+  @for (question of triviaForm.questions(); track question.id) {
     <div class="my-2">
       @if (question.type === 'boolean') {
         <div class="w-full mb-4">
@@ -14,11 +14,11 @@
           [name]="'question_' + question.id"
           [onLabel]="'Yes'"
           [offLabel]="'No'"
-          [ngModel]="answerPerQuestionId().get(question.id) ?? false"
-          (onChange)="changeAnswer(question.id, $event.checked ?? false)"
+          [ngModel]="triviaForm.answerPerQuestionId().get(question.id) ?? false"
+          (onChange)="triviaForm.changeAnswer(question.id, $event.checked ?? false)"
         />
-        @if (correctAnswerPerQuestionId().size > 0) {
-          @if (correctAnswerPerQuestionId().get(question.id)?.isCorrect) {
+        @if (triviaForm.correctAnswerPerQuestionId().size > 0) {
+          @if (triviaForm.correctAnswerPerQuestionId().get(question.id)?.isCorrect) {
             <i class="ml-2 pi pi-check text-green-500"></i>
           } @else {
             <i class="ml-2 pi pi-times text-red-500"></i>
@@ -28,7 +28,6 @@
         <div class="w-full mb-4">
           <p class="text-lg font-semibold">{{ question.question }}</p>
         </div>
-
         <div class="w-full flex flex-col gap-3">
           @for (answer of question.answers; track answer) {
             <label [for]="'question_' + question.id + '_answer_' + $index">
@@ -38,20 +37,18 @@
                 [inputId]="'question_' + question.id + '_answer_' + $index"
                 [name]="'question_' + question.id"
                 [value]="answer"
-                [ngModel]="answerPerQuestionId().get(question.id) ?? ''"
-                (onClick)="changeAnswer(question.id, $event.value)"
+                [ngModel]="triviaForm.answerPerQuestionId().get(question.id) ?? ''"
+                (onClick)="triviaForm.changeAnswer(question.id, $event.value)"
               />
               <span
-                [ngClass]="
-                  correctAnswerPerQuestionId().size > 0
-                    ? correctAnswerPerQuestionId().get(question.id)?.correctAnswer === answer
-                      ? 'text-green-500'
-                      : !correctAnswerPerQuestionId().get(question.id)?.isCorrect &&
-                          correctAnswerPerQuestionId().get(question.id)?.answer === answer
-                        ? 'text-red-500'
-                        : ''
-                    : ''
-                "
+                [ngClass]="{
+                  'text-green-500':
+                    triviaForm.correctAnswerPerQuestionId().get(question.id)?.correctAnswer ===
+                    answer,
+                  'text-red-500':
+                    !triviaForm.correctAnswerPerQuestionId().get(question.id)?.isCorrect &&
+                    triviaForm.correctAnswerPerQuestionId().get(question.id)?.answer === answer,
+                }"
               >
                 {{ answer }}
               </span>
@@ -60,17 +57,14 @@
         </div>
       }
     </div>
-
     <p-divider />
   }
-
   <div class="flex justify-between mt-2">
     <p-button
       [label]="'Get new questions'"
       [severity]="'secondary'"
-      (onClick)="getNewQuestions()"
+      (onClick)="triviaForm.getNewQuestions()"
     />
-
     <p-button [type]="'submit'" [disabled]="form.invalid" [label]="'Submit'" />
   </div>
 </form>
