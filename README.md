@@ -56,6 +56,8 @@ To execute unit tests with the [Karma](https://karma-runner.github.io) test runn
 
 There are no limits for questions defined and currently most of the happy flow is implemented. Some specific responses should trigger messages to the user. These messages can be shown using a toaster approach which shows them as a pop-up with the option to extend the duration it is shown to the user for WCAG purposes.
 
+The settings should be stored in the database or as a temporary solution in the local storage.
+
 The end-to-end tests have not been implemented in this project yet. This can be done in the future.
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
